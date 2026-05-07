@@ -8,3 +8,20 @@
 4. João Henrique da Luz
 
 ### Opção A
+
+
+### Estrutura
+```
+root/
+    doc/
+        pdf/t1-opcao-a.pdf
+    
+    problem1/
+        doc.md --> documentação e controle de requisitos
+    
+    problem2/
+        doc.md --> documentação e controle de requisitos
+```
+
+### Como executar o projeto
+> TODO depois de finalziar o projeto
