@@ -38,6 +38,30 @@ A tabela abaixo compara o comportamento das três implementações realizadas no
 | Hierarquia (Dijkstra) | Não       | Não         | Boa                |
 | Árbitro (Limitador)   | Não       | Não         | Excelente          |
 
+---
+
+## Estratégia de Hierarquia (Dijkstra)
+
+| Filósofo | Vezes que comeu |
+|---|---|
+| 0 | 1000 |
+| 1 | 1000 |
+| 2 | 1000 |
+| 3 | 1000 |
+| 4 | 1000 |
+
+---
+
+## Estratégia de Árbitro (Limitador)
+
+| Filósofo | Vezes que comeu |
+|---|---|
+| 0 | 1000 |
+| 1 | 1000 |
+| 2 | 1000 |
+| 3 | 1000 |
+| 4 | 1000 |
+
 
 ---
 ## Explicação Detalhada do Fairness
