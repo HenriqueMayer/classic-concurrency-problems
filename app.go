@@ -8,7 +8,7 @@ import (
 
 const (
 	NumFilosofos = 5
-	NumIteracoes = 10
+	NumIteracoes = 1000
 )
 
 func main() {
