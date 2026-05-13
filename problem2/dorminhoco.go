@@ -149,7 +149,6 @@ func main() {
 			mao: maosIniciais[i],
 		}
 		fmt.Printf("Jogador %d | Mão inicial: %v \n", novoJogador.id, novoJogador.mao)
-		fmt.Println("")
 
 		recebeCarta := canais[i]
 		enviaCarta := canais[(i+1)%numJogadores]
