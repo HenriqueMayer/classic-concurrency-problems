@@ -130,18 +130,18 @@ Abaixo estão listados três cenários em que há ocorrência de Deadlock:
 
 ### 1. Não utilizar canais bufferizados
 
-    Causa: Em um canal não bufferizado (tamanho 0), a operação de envio bloqueia a execução imediatamente até que o vizinho receptor leia a mensagem. Se todos os N jogadores tentarem enviar suas cartas de descarte ao mesmo tempo, todos ficarão bloqueados aguardando a leitura. Como ninguém conseguirá avançar para a instrução de "recebimento", o sistema congela em uma espera circular irresolvível (deadlock).
+- **Causa**: Em um canal não bufferizado (tamanho 0), a operação de envio bloqueia a execução imediatamente até que o vizinho receptor leia a mensagem. Se todos os N jogadores tentarem enviar suas cartas de descarte ao mesmo tempo, todos ficarão bloqueados aguardando a leitura. Como ninguém conseguirá avançar para a instrução de "recebimento", o sistema congela em uma espera circular irresolvível (deadlock).
 
-    Solução: O uso de canais com buffer de tamanho 1 (make(chan int, 1)) permite que o envio ocorra de forma assíncrona, absorvendo a carta e liberando o jogador para realizar a leitura do próximo canal.
+- **Solução**: O uso de canais com buffer de tamanho 1 (make(chan int, 1)) permite que o envio ocorra de forma assíncrona, absorvendo a carta e liberando o jogador para realizar a leitura do próximo canal.
 
 ### 2. Não utilizar a estrutura select no envio e recebimento
 
-    Causa: Quando um jogador forma a trinca, ele sinaliza a vitória e encerra sua rotina (return), abandonando permanentemente seu canal de leitura. Se o vizinho tentar repassar uma carta para esse jogador ausente através de um envio direto e bloqueante (enviaCarta <- descarte), ele ficará travado para sempre, pois o canal encherá e nunca mais será esvaziado. Esse travamento se propaga em cadeia (efeito cascata) para o resto da mesa, impedindo que os outros jogadores reajam ao fim do jogo.
+- **Causa**: Quando um jogador forma a trinca, ele sinaliza a vitória e encerra sua rotina (return), abandonando permanentemente seu canal de leitura. Se o vizinho tentar repassar uma carta para esse jogador ausente através de um envio direto e bloqueante (enviaCarta <- descarte), ele ficará travado para sempre, pois o canal encherá e nunca mais será esvaziado. Esse travamento se propaga em cadeia (efeito cascata) para o resto da mesa, impedindo que os outros jogadores reajam ao fim do jogo.
 
-    Solução: O uso do select cria rotas de fuga. Ao tentar enviar ou receber uma carta, a goroutine escuta simultaneamente um canal de aviso global (ex: alguemBateu). Se o jogo acabar durante uma transação, o select garante que o jogador abandone a operação de comunicação e reaja ao fim da partida.
+- **Solução**: O uso do select cria rotas de fuga. Ao tentar enviar ou receber uma carta, a goroutine escuta simultaneamente um canal de aviso global (ex: alguemBateu). Se o jogo acabar durante uma transação, o select garante que o jogador abandone a operação de comunicação e reaja ao fim da partida.
 
 ### 3. Não utilizar a diretiva go ao chamar a função jogar()
 
-    Causa: Omitir a palavra-chave go faz com que a função jogar() seja executada de forma totalmente síncrona, bloqueando a thread principal (main). Ao instanciar o primeiro jogador, a thread principal ficará presa dentro do loop infinito deste jogador aguardando que ele receba uma carta. Contudo, os demais jogadores sequer foram instanciados (o loop da main não avança para o índice 1), logo, a carta nunca será enviada. O programa paralisa instantaneamente em sua primeira iteração.
+- **Causa**: Omitir a palavra-chave go faz com que a função jogar() seja executada de forma totalmente síncrona, bloqueando a thread principal (main). Ao instanciar o primeiro jogador, a thread principal ficará presa dentro do loop infinito deste jogador aguardando que ele receba uma carta. Contudo, os demais jogadores sequer foram instanciados (o loop da main não avança para o índice 1), logo, a carta nunca será enviada. O programa paralisa instantaneamente em sua primeira iteração.
 
-    Solução: A diretiva go garante que cada jogador seja lançado como uma goroutine independente, permitindo que a função main conclua o seu fluxo, instancie todos os membros da mesa e inicie o gerenciamento da partida.
+- **Solução**: A diretiva go garante que cada jogador seja lançado como uma goroutine independente, permitindo que a função main conclua o seu fluxo, instancie todos os membros da mesa e inicie o gerenciamento da partida.
