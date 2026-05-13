@@ -103,8 +103,8 @@ func jogar(
 
 		// Se alguém bateu, bate também
 		case <-alguemBateu:
-			fmt.Printf("Jogador %d | Bateu em seguida (durante o descarte)!\n", id)
 			time.Sleep(time.Duration(rand.Intn(1000)) * time.Millisecond)
+			fmt.Printf("Jogador %d | Bateu em seguida (durante o descarte)!\n", id)
 			mesa <- id
 			return
 		}
@@ -118,8 +118,8 @@ func jogar(
 
 		// Se alguém bateu, bate também
 		case <-alguemBateu:
-			fmt.Printf("Jogador %d | Bateu em seguida (durante a compra)!\n", id)
 			time.Sleep(time.Duration(rand.Intn(1000)) * time.Millisecond)
+			fmt.Printf("Jogador %d | Bateu em seguida (durante a compra)!\n", id)
 			mesa <- id
 			return
 		}
