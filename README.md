@@ -119,3 +119,7 @@ A tabela abaixo compara o comportamento das três implementações realizadas no
 - **Comportamento:** É a estratégia mais robusta para garantir que todos tenham sua vez. O canal de controle (árbitro) funciona como uma fila de espera.
 
 - **Dados de Execução:** Apresenta a maior equidade, pois a restrição de ocupação da mesa força uma rotatividade natural entre os filósofos pensantes e famintos.
+
+---
+
+## Análise do Problema 2 (Dorminhoco)
