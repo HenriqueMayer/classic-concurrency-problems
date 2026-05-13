@@ -22,7 +22,7 @@ func distribuirCartas(numJogadores int) [][]int {
 	// 		numJogadores (int): número de jogadores
 	//
 	// Return:
-	// 		list[int]
+	// 		maos (list[int]): lista de cartas de todos os jogadores
 
 	// Cria um baralho vazio
 	baralho := []int{}
@@ -133,7 +133,6 @@ func main() {
 	alguemBateu := make(chan bool)
 
 	canais := make([]chan int, numJogadores)
-	// https://stackoverflow.com/questions/21950244/is-there-a-way-to-iterate-over-a-range-of-integers
 	for i := range numJogadores {
 		canais[i] = make(chan int, 1)
 	}
@@ -150,6 +149,7 @@ func main() {
 			mao: maosIniciais[i],
 		}
 		fmt.Printf("Jogador %d | Mão inicial: %v \n", novoJogador.id, novoJogador.mao)
+		fmt.Println("")
 
 		recebeCarta := canais[i]
 		enviaCarta := canais[(i+1)%numJogadores]
